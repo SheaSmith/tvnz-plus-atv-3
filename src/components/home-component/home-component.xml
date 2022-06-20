@@ -1,0 +1,38 @@
+<scroller id="scroller">
+    <header>
+        <dynamicImageHeader uberImageSourceId="hero" gradientVerticalOffset="-41">
+            <image required="true" src720="https://tvnz-appletv.shea.nz/img/v3defaultUberImage_720.png"
+                   src1080="https://tvnz-appletv.shea.nz/img/v3defaultUberImage_1080.png"/>
+            <title/>
+        </dynamicImageHeader>
+    </header>
+    <items id="home">
+        {{#with _embedded as | emb |}}
+            {{#with ../layout.slots.hero.modules.[1]}}
+                {{> hero module=this embedded=emb }}
+            {{/with}}
+
+            {{#each ../layout.slots.main.modules}}
+                {{#with this as | mod |}}
+                    {{#ifCond type '==' 'featuredContent'}}
+                        {{> featuredContent module=mod embedded=emb }}
+                    {{/ifCond}}
+                    {{#ifCond type '==' 'itemStrip'}}
+                        {{> itemStrip module=mod embedded=emb }}
+                    {{/ifCond}}
+                {{/with}}
+            {{/each}}
+
+            {{#each ../layout.slots.below.modules}}
+                {{#with this as | mod |}}
+                    {{#ifCond type '==' 'featuredContent'}}
+                        {{> featuredContent module=mod embedded=emb }}
+                    {{/ifCond}}
+                    {{#ifCond type '==' 'itemStrip'}}
+                        {{> itemStrip module=mod embedded=emb }}
+                    {{/ifCond}}
+                {{/with}}
+            {{/each}}
+        {{/with}}
+    </items>
+</scroller>

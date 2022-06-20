@@ -1,0 +1,3 @@
+<snipe position="downLeft" color="{{#ifCond name '==' 'LIVE'}}red-grad{{/ifCond}}{{#ifCond name '!=' 'LIVE'}}blue-grad{{/ifCond}}">
+    <title>{{label}}</title>
+</snipe>

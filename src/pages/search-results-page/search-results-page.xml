@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
+    <head>
+        <script src="https://tvnz-appletv.shea.nz/js/search-results.js?t=116" />
+    </head>
+    <body>
+        <searchResults id="searchResults">
+            <menu>
+                <sections id="sections">
+                    <menuSection id="menuSection">
+                        <items id="items">
+                            <oneLineMenuItem id="loading" dimmed="true">
+                                <label>Loading</label>
+                                <accessories>
+                                    <spinner/>
+                                </accessories>
+                            </oneLineMenuItem>
+                        </items>
+                    </menuSection>
+                </sections>
+            </menu>
+        </searchResults>
+    </body>
+</atv>

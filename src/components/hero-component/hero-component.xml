@@ -1,0 +1,26 @@
+<collectionDivider alignment="left">
+    <title>{{module.title}}</title>
+</collectionDivider>
+<shelf id="hero" columnCount="5"
+       onItemFocused="heroComponent.expandRow(indexPath[1], '{{module.title}}', '{{module.nextPage}}')">
+<sections>
+    <shelfSection>
+        <items id="{{module.title}}">
+            {{#each module.items}}
+                {{#with (lookup ../embedded this.href)}}
+                    <sixteenByNinePoster id="{{id}}" onSelect="genericPage.load('{{#if showId}}{{showId}}{{else}}{{page.href}}{{/if}}')">
+                        <title>{{title}}</title>
+                        <image required="true" src="{{tileImage.src}}?width=375&amp;height=210"/>
+                        <defaultImage>resource://16x9.png</defaultImage>
+                        <uberImage src720="{{coverImage.src}}?width=1280&amp;height=400"
+                                   src1080="{{coverImage.src}}?width=1920&amp;height=641"/>
+                        {{#if badge}}
+                            {{>snipe badge}}
+                        {{/if}}
+                    </sixteenByNinePoster>
+                {{/with}}
+            {{/each}}
+        </items>
+    </shelfSection>
+</sections>
+</shelf>

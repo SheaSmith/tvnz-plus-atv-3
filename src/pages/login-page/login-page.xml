@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
+    <body>
+        <authentication id="login">
+            <image required="true" src="https://tvnz-appletv.shea.nz/img/logo.png?t=1"/>
+            <accountNameTitle/>
+            <accountNameInstructions>Enter the email address of your TVNZ account.</accountNameInstructions>
+            <accountNameLabel>Email</accountNameLabel>
+            <accountNameFootnote>If you need to register an account or reset your password visit tvnz.co.nz</accountNameFootnote>
+            <accountPasswordTitle/>
+            <accountPasswordInstructions>Enter your TVNZ account password.</accountPasswordInstructions>
+            <accountPasswordLabel>Password</accountPasswordLabel>
+            <connectionString>Signing into your TVNZ account&#8230;</connectionString>
+            <failureTitle>Sign In Failed</failureTitle>
+            <failureInstructions>Check the email and password you entered and try again. Go to to tvnz.co.nz if you have forgotten your password.</failureInstructions>
+            <urlToLoadAfterAuth>https://tvnz-appletv.shea.nz/dummy-page.xml</urlToLoadAfterAuth>
+        </authentication>
+    </body>
+</atv>

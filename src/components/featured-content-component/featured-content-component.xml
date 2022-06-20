@@ -1,0 +1,43 @@
+<collectionDivider alignment="left">
+    <title>{{module.title}}</title>
+</collectionDivider>
+<shelf id="{{module.title}}-shelf" columnCount="5"
+       onItemFocused="featuredContent.expandRow(indexPath[1], '{{module.title}}', '{{module.nextPage}}')">
+    <sections>
+        <shelfSection>
+            <items id="{{module.title}}">
+                {{#each module.items}}
+                    {{#ifCond ../module.tileLayout '==' 'fullWidthCircular'}}
+                        <squarePoster
+                    {{/ifCond}}
+                    {{#ifCond ../module.tileLayout '!=' 'fullWidthCircular'}}
+                    <sixteenByNinePoster
+                    {{/ifCond}}
+                        id="{{this.href}}"
+                    {{#with (lookup ../embedded this.href)}}
+                        onSelect="genericPage.load('{{#if showId}}{{showId}}{{else}}{{page.href}}{{/if}}')">
+                        <title>{{title}}</title>
+                        {{#ifCond ../../module.tileLayout '==' 'fullWidthCircular'}}
+                            <image src="{{../tileImage.src}}?width=300&amp;height=300"/>
+                            <subtitle>{{#each ../displayTags}}{{this}}{{#unless @last}} • {{/unless}}{{/each}}</subtitle>
+                            <defaultImage>resource://Square.png</defaultImage>
+                        {{/ifCond}}
+                        {{#ifCond ../../module.tileLayout '!=' 'fullWidthCircular'}}
+                            <image src="{{../tileImage.src}}?width=375&amp;height=210"/>
+                            <defaultImage>resource://16x9.png</defaultImage>
+                        {{/ifCond}}
+                        {{#if badge}}
+                            {{>snipe badge}}
+                        {{/if}}
+                    {{/with}}
+                    {{#ifCond ../module.tileLayout '==' 'fullWidthCircular'}}
+                        </squarePoster>
+                    {{/ifCond}}
+                    {{#ifCond ../module.tileLayout '!=' 'fullWidthCircular'}}
+                        </sixteenByNinePoster>
+                    {{/ifCond}}
+                {{/each}}
+            </items>
+        </shelfSection>
+    </sections>
+</shelf>

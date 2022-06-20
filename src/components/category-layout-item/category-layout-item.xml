@@ -1,0 +1,33 @@
+{{#with (lookup embedded item.href)}}
+    <oneLineMenuItem id="{{id}}" onSelect="genericPage.load('{{#if showId}}{{showId}}{{else}}{{page.href}}{{/if}}')">
+        <label>{{title}}</label>
+        <accessories>
+            <arrow/>
+        </accessories>
+        <preview>
+            <longDescriptionPreview>
+                <title>{{title}}</title>
+                <summary>{{synopsis}}</summary>
+                <image>{{tileImage.src}}?width=375&amp;height=210</image>
+                <metadata>
+                    {{#if badge}}
+                        <mainLabel>{{badge.label}}</mainLabel>
+                    {{/if}}
+                    {{#each descriptiveCategories}}
+                        {{#with (lookup ../../embedded this)}}
+                            <label>{{title}}</label>
+                        {{/with}}
+                    {{/each}}
+                    {{#ifCond showType '==' 'Show'}}
+                        <label>{{../seasonsAvailable}} season{{#ifCond ../seasonsAvailable '>' '1'}}s{{/ifCond}}</label>
+                    {{/ifCond}}
+                    {{#ifCond showType '!=' 'Show'}}
+                        {{#with (lookup ../../embedded ../watchAction/videoHref)}}
+                            <label>{{formatDuration duration}}</label>
+                        {{/with}}
+                    {{/ifCond}}
+                </metadata>
+            </longDescriptionPreview>
+        </preview>
+    </oneLineMenuItem>
+{{/with}}

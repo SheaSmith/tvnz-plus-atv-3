@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
+    <head>
+        <script src="https://tvnz-appletv.shea.nz/js/hero-component.js?t=15"/>
+        <script src="https://tvnz-appletv.shea.nz/js/featured-content-component.js"/>
+        <script src="https://tvnz-appletv.shea.nz/js/generic-page.js?t=79"/>
+    </head>
+    <body>
+        {{#with layout}}
+            {{> (lookup . 'type') @root }}
+        {{/with}}
+    </body>
+</atv>

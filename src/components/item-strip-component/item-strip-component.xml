@@ -1,0 +1,23 @@
+<collectionDivider alignment="left">
+    <title>{{module.title}}</title>
+</collectionDivider>
+<shelf id="{{module.title}}-shelf" columnCount="5">
+<sections>
+    <shelfSection>
+        <items id="{{module.title}}">
+            {{#each module.items}}
+                {{#with (lookup ../embedded this.href)}}
+                    <sixteenByNinePoster id="{{id}}" onSelect="genericPage.load('{{#if showId}}{{showId}}{{else}}{{page.href}}{{/if}}')">
+                        <title>{{title}}</title>
+                        <image src="{{tileImage.src}}?width=375&amp;height=210"/>
+                        <defaultImage>resource://16x9.png</defaultImage>
+                        <overlay position="vcenter" textAlignment="center" size="large-super">
+                            <title>{{title}}</title>
+                        </overlay>
+                    </sixteenByNinePoster>
+                {{/with}}
+            {{/each}}
+        </items>
+    </shelfSection>
+</sections>
+</shelf>

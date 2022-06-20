@@ -1,0 +1,51 @@
+<scroller id="{{id}}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
+    <items>
+        {{#with _embedded as | embedded |}}
+            {{#with ../layout.slots.hero.modules.[1] as | module |}}
+                {{#each module.items as | modItem |}}
+                    {{#with (lookup embedded modItem.href) as | item |}}
+                        <adornedShelf id="{{item.id}}" columnCount="5">
+                            <sections>
+                                <shelfSection>
+                                    <items>
+                                        {{#with (lookup embedded item.scheduleHref) as | schedule |}}
+                                            {{#each schedule.programmes as | progId progIndex |}}
+                                                {{#ifCond progId '==' item.programmeNowPlayingHref}}
+                                                    {{#each schedule.programmes as | actualProgId actualProgIndex |}}
+                                                        {{#ifCond actualProgIndex '>=' progIndex}}
+                                                            {{#with (lookup embedded actualProgId) as | prog |}}
+                                                                <sixteenByNinePoster id="{{prog.id}}">
+                                                                    <title>{{prog.title}}</title>
+                                                                    {{#with (lookup embedded prog.showHref)}}
+                                                                        <image src="{{tileImage.src}}" required="true"/>
+                                                                    {{/with}}
+                                                                    {{#ifCond actualProgIndex '==' progIndex}}
+                                                                        <snipe color="red-grad" position="downLeft">
+                                                                            <title>LIVE</title>
+                                                                        </snipe>
+                                                                    {{/ifCond}}
+                                                                </sixteenByNinePoster>
+                                                            {{/with}}
+                                                        {{/ifCond}}
+                                                    {{/each}}
+                                                {{/ifCond}}
+                                            {{/each}}
+                                        {{/with}}
+                                    </items>
+                                </shelfSection>
+                            </sections>
+                            <backgroundImage src="https://tvnz-appletv.shea.nz/img/adorned-shelf-bg.png" required="true" />
+                            <title>{{item.title}}</title>
+                            <subtitle>{{item.synopsis}}</subtitle>
+                            <actionButton id="{{item.id}}_live">
+                                <title>View TV Guide</title>
+                            </actionButton>
+                        </adornedShelf>
+                    {{/with}}
+                {{/each}}
+            {{/with}}
+        {{/with}}
+    </items>
+</scroller>
+<!--https://d1irqd0o6b6kl5.cloudfront.net/start/2022-05-17T00:00:00+12:00/end/2022-05-17T23:15:00+12:00/master.m3u8-->

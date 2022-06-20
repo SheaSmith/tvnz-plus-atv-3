@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
+    <head>
+        <script src="https://tvnz-appletv.shea.nz/js/main-menu.js?t=159"/>
+    </head>
+    <body>
+        <viewWithNavigationBar id="menu" onNavigate="mainMenu.navigate(event)">
+            <navigation currentIndex="1">
+                <navigationItem id="search">
+                    <title>Search</title>
+                </navigationItem>
+                {{#each items}}
+                    <navigationItem id="{{this.href}}">
+                        <title>{{this.title}}</title>
+                    </navigationItem>
+                {{/each}}
+                <navigationItem id="profiles">
+                    <title>Switch Profile</title>
+                </navigationItem>
+            </navigation>
+        </viewWithNavigationBar>
+    </body>
+</atv>

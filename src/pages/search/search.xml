@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
+    <body>
+        <search id="search" showPreview="false">
+            <baseURL>https://tvnz-appletv.shea.nz/search-results-page.xml?q=</baseURL>
+            <header>
+                <simpleHeader>
+                    <title>Search</title>
+                </simpleHeader>
+            </header>
+        </search>
+    </body>
+</atv>

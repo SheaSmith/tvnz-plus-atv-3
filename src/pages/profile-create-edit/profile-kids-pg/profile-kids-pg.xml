@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../../node_modules/atv-legacy.js/atv.xsd">
+    <head>
+        <script src="https://tvnz-appletv.shea.nz/js/profile-kids-pg.js?t=13" />
+    </head>
+    <body>
+        <optionDialog id="allowPg">
+            <header>
+                <simpleHeader>
+                    <title>Allow PG rated kids shows?</title>
+                </simpleHeader>
+            </header>
+            <description>Some kids shows have a classification of Parental Guidance (PG) which means adult guidance is recommended for young viewers. Do you want to make these shows available?</description>
+            <menu>
+                <sections>
+                    <menuSection>
+                        <items>
+                            <oneLineMenuItem id="yes" onSelect="profileKidsPg.select('preteenPG', {{returnToEdit}}, {{json profile}})">
+                                <label>Yes</label>
+                            </oneLineMenuItem>
+                            <oneLineMenuItem id="no" onSelect="profileKidsPg.select('preteenG', {{returnToEdit}}, {{json profile}})">
+                                <label>No</label>
+                            </oneLineMenuItem>
+                        </items>
+                    </menuSection>
+                </sections>
+            </menu>
+        </optionDialog>
+    </body>
+</atv>

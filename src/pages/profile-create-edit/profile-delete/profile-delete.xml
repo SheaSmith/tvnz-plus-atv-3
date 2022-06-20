@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../../node_modules/atv-legacy.js/atv.xsd">
+    <head>
+        <script src="https://tvnz-appletv.shea.nz/js/profile-delete.js?t=11" />
+    </head>
+    <body>
+        <optionDialog id="delete">
+            <header>
+                <simpleHeader>
+                    <title>Are you sure you want to delete this profile?</title>
+                </simpleHeader>
+            </header>
+            <description>Warning: Deleting this profile will permanently delete their favourites, recommendations and watch history. You won't be able to get this back again.</description>
+            <menu>
+                <sections>
+                    <menuSection>
+                        <items>
+                            <oneLineMenuItem id="delete" onSelect="profileDelete.deleteProfile('{{this}}')">
+                                <label>Delete</label>
+                            </oneLineMenuItem>
+                            <oneLineMenuItem id="cancel" onSelect="profileDelete.cancel('{{this}}')">
+                                <label>Cancel</label>
+                            </oneLineMenuItem>
+                        </items>
+                    </menuSection>
+                </sections>
+            </menu>
+        </optionDialog>
+    </body>
+</atv>

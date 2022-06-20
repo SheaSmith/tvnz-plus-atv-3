@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../../node_modules/atv-legacy.js/atv.xsd">
+    <head>
+        <script src="https://tvnz-appletv.shea.nz/js/profile-type.js?t=13" />
+        <title>{{json @root}}</title>
+    </head>
+    <body>
+        <shelfList id="profileType">
+            <header>
+                <simpleHeader>
+                    <title>Great! Who's this profile for?</title>
+                </simpleHeader>
+            </header>
+            <centerShelf>
+                <shelf id="profileType_shelf" columnCount="3" center="true">
+                    <sections>
+                        <shelfSection>
+                            <items>
+                                <moviePoster id="adult" alwaysShowTitles="true" onlyShowSubtitlesWhenFocused="false" onSelect="profileType.select('none', {{returnToEdit}}, {{json profile}})">
+                                    <title>Adult</title>
+                                    <subtitle>Ages 13+</subtitle>
+                                    <image>http://xbox.tvnz.io/img/profiles/content/all@1.5x.png</image>
+                                </moviePoster>
+                                <moviePoster id="kids" alwaysShowTitles="true" onlyShowSubtitlesWhenFocused="false" onSelect="profileType.select('preteen', {{returnToEdit}}, {{json profile}})">
+                                    <title>Kids</title>
+                                    <subtitle>Ages 5-12</subtitle>
+                                    <image>http://xbox.tvnz.io/img/profiles/content/kid@1.5x.png</image>
+                                </moviePoster>
+                                <moviePoster id="preschool" alwaysShowTitles="true" onlyShowSubtitlesWhenFocused="false" onSelect="profileType.select('preschool', {{returnToEdit}}, {{json profile}})">
+                                    <title>Preschool</title>
+                                    <subtitle>Ages 2-5</subtitle>
+                                    <image>http://xbox.tvnz.io/img/profiles/content/preschool@1.5x.png</image>
+                                </moviePoster>
+                            </items>
+                        </shelfSection>
+                    </sections>
+                </shelf>
+            </centerShelf>
+        </shelfList>
+    </body>
+</atv>

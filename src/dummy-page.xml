@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../node_modules/atv-legacy.js/atv.xsd">
+    <body>
+        <scroller id="dummy-page">
+            <items>
+                <textDetail>
+                    <column>
+                        <title> </title>
+                        <textSection>
+                            <title> </title>
+                            <text/>
+                        </textSection>
+                    </column>
+                </textDetail>
+            </items>
+        </scroller>
+    </body>
+</atv>

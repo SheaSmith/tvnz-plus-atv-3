@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
+    <head>
+        <script src="https://tvnz-appletv.shea.nz/js/profile-page.js?t=181"/>
+    </head>
+    <body>
+        <shelfList id="profiles" volatile="true" onVolatileReload="profilePage.volatileReload()">
+            <header>
+                <simpleHeader>
+                    <title>Who's watching?</title>
+                </simpleHeader>
+            </header>
+            <centerShelf>
+                <shelf id="profiles_shelf" center="true" columnCount="5">
+                    <sections>
+                        <shelfSection>
+                            <items>
+                                {{#each profiles}}
+                                    <icloud-user-poster id="{{this.id}}" onSelect="profilePage.loadProfile('{{this.id}}')" alwaysShowTitles="true" onHoldSelect="profilePage.editProfile('{{this.id}}')">
+                                        <title>{{this.firstName}}</title>
+                                        <image src="{{this.iconImage.src}}" required="true" />
+                                    </icloud-user-poster>
+                                {{/each}}
+                                {{#ifCond profiles.length '<' '5'}}
+                                    <icloud-user-poster id="add" onSelect="profilePage.addProfile()" alwaysShowTitles="true">
+                                        <title>Add profile</title>
+                                        <image required="true" src="https://tvnz-appletv.shea.nz/img/empty_profile.png?t=3" />
+                                    </icloud-user-poster>
+                                {{/ifCond}}
+                            </items>
+                        </shelfSection>
+                    </sections>
+                </shelf>
+            </centerShelf>
+        </shelfList>
+    </body>
+</atv>

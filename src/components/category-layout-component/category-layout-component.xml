@@ -1,0 +1,51 @@
+<listWithPreview id="{{id}}">
+    <header>
+        <simpleHeader>
+            {{#with (lookup _embedded layout.categoryHref)}}
+                {{#if logo}}
+                    <image required="true" src="{{../logo.src}}?height=100"/>
+                {{else}}
+                    <title>{{title}}</title>
+                {{/if}}
+            {{/with}}
+        </simpleHeader>
+    </header>
+
+    <menu>
+        <sections>
+            {{#with _embedded as | emb |}}
+                {{#with ../layout.slots.hero.modules.[1]}}
+                    <menuSection>
+                        <header>
+                            <horizontalDivider alignment="left">
+                                <title>{{title}}</title>
+                            </horizontalDivider>
+                        </header>
+                        <items>
+                            {{#each items}}
+                                {{>categoryLayoutItem item=this embedded=emb}}
+                            {{/each}}
+                        </items>
+                    </menuSection>
+                {{/with}}
+
+                {{#each ../layout.slots.main.modules}}
+                    {{#with this as | mod |}}
+                        <menuSection>
+                            <header>
+                                <horizontalDivider alignment="left">
+                                    <title></title>
+                                </horizontalDivider>
+                            </header>
+                            <items>
+                                {{#each mod.items}}
+                                    {{>categoryLayoutItem item=this embedded=emb}}
+                                {{/each}}
+                            </items>
+                        </menuSection>
+                    {{/with}}
+                {{/each}}
+            {{/with}}
+        </sections>
+    </menu>
+</listWithPreview>

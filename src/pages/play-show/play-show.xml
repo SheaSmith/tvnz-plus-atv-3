@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
+    <body>
+        <videoPlayer id="videoPlayer">
+            <httpLiveStreamingVideoAsset id="asset">
+                {{#with data.video}}
+                    <mediaURL>{{playback.bcPayload.sources.[0].src}}</mediaURL>
+                    <title>{{primaryLabel}}</title>
+                    <description>{{synopsis}}</description>
+                    <image src="{{image}}"/>
+                    <bookmarkTime>{{durationToSeconds duration.watched}}</bookmarkTime>
+                    {{#each playback.bcPayload.cue_points }}
+                        {{#ifCond name '==' 'CREDITS'}}
+                            <upNextPresentationTime>{{../time}}</upNextPresentationTime>
+                        {{/ifCond}}
+                    {{/each}}
+                    <upNextPresentationDuration>20</upNextPresentationDuration>
+                    {{#with playback.bcPayload.sources.[0].key_systems.[com.apple.fps.1_0]}}
+                        <stash>
+                            <fpsKeyServerURL>{{key_request_url}}</fpsKeyServerURL>
+                            <fpsCertificateURL>{{certificate_url}}</fpsCertificateURL>
+                        </stash>
+                    {{/with}}
+                    <externalAssetID>{{id}}</externalAssetID>
+                {{/with}}
+            </httpLiveStreamingVideoAsset>
+        </videoPlayer>
+    </body>
+</atv>
