@@ -5,7 +5,7 @@ export class AuthInterceptor implements Interceptor {
     aboutToRequest(service: HttpService): Q.Promise<HttpService> {
         const headers: { [key: string]: string } = {
             "Authorization": 'Bearer ' + atv.localStorage['accessToken'] as string,
-            'x-tvnz-api-client-id': 'tizen/4.48.0',
+            'x-tvnz-api-client-id': 'tizen/7.1.41',
             'Accept': 'application/json,x-tvnz-play-page-api;version=v4'
         };
 

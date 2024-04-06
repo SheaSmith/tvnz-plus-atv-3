@@ -2,7 +2,7 @@
 <atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
     <head>
-        <script src="https://tvnz-appletv.shea.nz/js/main-menu.js?t=159"/>
+        <script src="https://tvnz-appletv.shea.nz/js/main-menu.js?t=160"/>
     </head>
     <body>
         <viewWithNavigationBar id="menu" onNavigate="mainMenu.navigate(event)">

@@ -18,7 +18,7 @@ module.exports = {
         'search-results': {import: './src/pages/search-results-page/search-results-page.ts', filename: '[name].js', library: {name: 'searchResults', type: 'var'}},
     },
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, 'dist2'),
         environment: {
             arrowFunction: false,
             bigIntLiteral: false,

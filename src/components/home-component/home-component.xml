@@ -1,10 +1,16 @@
 <scroller id="scroller">
     <header>
+        {{#if layout.slots.hero.modules.[1]}}
         <dynamicImageHeader uberImageSourceId="hero" gradientVerticalOffset="-41">
             <image required="true" src720="https://tvnz-appletv.shea.nz/img/v3defaultUberImage_720.png"
                    src1080="https://tvnz-appletv.shea.nz/img/v3defaultUberImage_1080.png"/>
             <title/>
         </dynamicImageHeader>
+        {{else}}
+            <simpleHeader>
+                <title>{{metadata.description}}</title>
+            </simpleHeader>
+        {{/if}}
     </header>
     <items id="home">
         {{#with _embedded as | emb |}}

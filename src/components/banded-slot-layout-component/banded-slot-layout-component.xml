@@ -2,7 +2,7 @@
           xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
     <items>
         {{#with _embedded as | embedded |}}
-            {{#with ../layout.slots.hero.modules.[1] as | module |}}
+            {{#with ../layout.slots.hero.modules.[2] as | module |}}
                 {{#each module.items as | modItem |}}
                     {{#with (lookup embedded modItem.href) as | item |}}
                         <adornedShelf id="{{item.id}}" columnCount="5">

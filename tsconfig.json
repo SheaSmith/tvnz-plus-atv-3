@@ -14,7 +14,7 @@
         "forceConsistentCasingInFileNames": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "outDir": "dist",
+        "outDir": "dist2",
         "paths": {
             "atv-legacy-q": ["./node_modules/@types/q"]
         }
