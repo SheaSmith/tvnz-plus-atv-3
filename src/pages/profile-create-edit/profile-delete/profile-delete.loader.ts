@@ -9,7 +9,7 @@ export class ProfileDelete extends Page {
     
     protected loadData(): Q.Promise<any> {
         const deferred = Q.defer<string>();
-        deferred.resolve(this.profileId);
+        deferred.resolve({id: this.profileId} as any);
 
         return deferred.promise;
     }

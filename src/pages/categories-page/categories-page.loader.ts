@@ -4,7 +4,7 @@ import Q from "atv-legacy-q";
 import {HttpService} from "atv-legacy.js/dist/http-service";
 import {AuthInterceptor} from "../../auth-interceptor";
 import {registerHelpers} from "../../custom-handlebars-helpers";
-import Handlebars from "handlebars";
+import {Environment} from "nunjucks";
 
 export class CategoriesPage extends Page {
     protected loadTemplateSource(): Q.Promise<string> {
@@ -15,8 +15,8 @@ export class CategoriesPage extends Page {
     }
 
 
-    protected renderXml(data?: any) {
-        super.renderXml(data);
+    protected renderXml(environment: Environment, data?: any) {
+        super.renderXml(environment, data);
     }
 
     constructor(private url: string) {
@@ -29,7 +29,7 @@ export class CategoriesPage extends Page {
             .run<any>();
     }
 
-    protected registerCustomHelpers(handlebars: typeof Handlebars) {
-        registerHelpers(handlebars);
+    protected registerCustomHelpers(environment: Environment) {
+        registerHelpers(environment);
     }
 }

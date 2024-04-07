@@ -1,6 +1,6 @@
-import {HttpService} from "../../../../../../Users/Shea/Documents/Apple TV Framework/library/dist/http-service";
 import {AuthInterceptor} from "../../../auth-interceptor";
 import {ProfileEdit} from "../profile-edit/profile-edit.loader";
+import {HttpService} from "atv-legacy.js/dist/http-service";
 
 export function deleteProfile(profileId: string) {
     const proxyDocument = new atv.ProxyDocument();

@@ -1,44 +1,43 @@
 <scroller id="scroller">
     <header>
-        {{#if layout.slots.hero.modules.[1]}}
-        <dynamicImageHeader uberImageSourceId="hero" gradientVerticalOffset="-41">
-            <image required="true" src720="https://tvnz-appletv.shea.nz/img/v3defaultUberImage_720.png"
-                   src1080="https://tvnz-appletv.shea.nz/img/v3defaultUberImage_1080.png"/>
-            <title/>
-        </dynamicImageHeader>
-        {{else}}
+        {% if layout.slots.hero.modules[1] %}
+            <dynamicImageHeader uberImageSourceId="hero" gradientVerticalOffset="-41">
+                <image required="true" src720="https://tvnz-appletv.shea.nz/img/v3defaultUberImage_720.png"
+                       src1080="https://tvnz-appletv.shea.nz/img/v3defaultUberImage_1080.png"/>
+                <title/>
+            </dynamicImageHeader>
+        {% else %}
             <simpleHeader>
-                <title>{{metadata.description}}</title>
+                <title>{{ metadata.description }}</title>
             </simpleHeader>
-        {{/if}}
+        {% endif %}
     </header>
     <items id="home">
-        {{#with _embedded as | emb |}}
-            {{#with ../layout.slots.hero.modules.[1]}}
-                {{> hero module=this embedded=emb }}
-            {{/with}}
+        {% if layout.slots.hero.modules[1] %}
+            {% component 'hero', { module: layout.slots.hero.modules[1], embedded: _embedded } %}
+        {% endif %}
 
-            {{#each ../layout.slots.main.modules}}
-                {{#with this as | mod |}}
-                    {{#ifCond type '==' 'featuredContent'}}
-                        {{> featuredContent module=mod embedded=emb }}
-                    {{/ifCond}}
-                    {{#ifCond type '==' 'itemStrip'}}
-                        {{> itemStrip module=mod embedded=emb }}
-                    {{/ifCond}}
-                {{/with}}
-            {{/each}}
 
-            {{#each ../layout.slots.below.modules}}
-                {{#with this as | mod |}}
-                    {{#ifCond type '==' 'featuredContent'}}
-                        {{> featuredContent module=mod embedded=emb }}
-                    {{/ifCond}}
-                    {{#ifCond type '==' 'itemStrip'}}
-                        {{> itemStrip module=mod embedded=emb }}
-                    {{/ifCond}}
-                {{/with}}
-            {{/each}}
-        {{/with}}
+
+        {% for module in layout.slots.main.modules %}
+            {% if module.type == 'featuredContent' %}
+
+                {% component 'featuredContent', { module: module, embedded: _embedded } %}
+
+            {% elseif type == 'itemStrip' %}
+                {% component 'itemStrip', module %}
+            {% endif %}
+        {% endfor %}
+
+        {% for module in layout.slots.below.modules %}
+
+            {% if module.type == 'featuredContent' %}
+
+                {% component 'featuredContent', { module: module, embedded: _embedded } %}
+
+            {% elseif type == 'itemStrip' %}
+                {% component 'itemStrip', module %}
+            {% endif %}
+        {% endfor %}
     </items>
 </scroller>

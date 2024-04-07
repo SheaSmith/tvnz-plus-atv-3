@@ -1,5 +1,5 @@
-import {HttpService, Interceptor} from "atv-legacy.js/dist/http-service";
 import Q from "atv-legacy-q";
+import {HttpService, Interceptor} from "atv-legacy.js/dist/http-service";
 
 export class AuthInterceptor implements Interceptor {
     aboutToRequest(service: HttpService): Q.Promise<HttpService> {
@@ -17,4 +17,5 @@ export class AuthInterceptor implements Interceptor {
         deferred.resolve(service.headers(headers));
         return deferred.promise;
     }
+
 }

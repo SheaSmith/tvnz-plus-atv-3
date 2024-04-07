@@ -1,144 +1,150 @@
-{{#with data}}
-    {{#with show}}
-    <itemDetailWithImageHeader xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<itemDetailWithImageHeader xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                            xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd" id="id"
-                           layout="compact" posterAlignment="top" volatile="true" onVolatileReload="genericPage.volatileReloadShow('{{id}}')">
+                           layout="compact" posterAlignment="top" volatile="true"
+                           onVolatileReload="genericPage.volatileReloadShow('{{ data.show.id }}')">
 
-            <header>
-                <imageHeader>
-                    <image required="true" insets="280 0 0 0" src="{{coverImage}}?width=1920&amp;height=641"/>
-                </imageHeader>
-            </header>
-            <image style="sixteenByNinePoster">{{tileImage}}</image>
-            <defaultImage>resource://16x9.png</defaultImage>
-            <title>{{title}}</title>
-            {{#if unwatched}}
-                <summary>{{synopsis}}</summary>
-            {{else}}
-                <summary>{{smartWatch.video.synopsis}}</summary>
-                {{#ifCond smartWatch.video.type '==' 'Episode'}}
-                    <subtitle>{{../smartWatch.video.primaryLabel}}</subtitle>
-                {{/ifCond}}
-            {{/if}}
+    <header>
+        <imageHeader>
+            <image required="true" insets="280 0 0 0" src="{{ data.show.coverImage }}?width=1920&amp;height=641"/>
+        </imageHeader>
+    </header>
+    <image style="sixteenByNinePoster">{{ data.show.tileImage }}</image>
+    <defaultImage>resource://16x9.png</defaultImage>
+    <title>{{ data.show.title }}</title>
+    {% if data.show.unwatched %}
+        <summary>{{ data.show.synopsis }}</summary>
+    {% else %}
+        <summary>{{ data.show.smartWatch.video.synopsis }}</summary>
+        {% if data.show.smartWatch.video.type == 'Episode' %}
+            <subtitle>{{ data.show.smartWatch.video.primaryLabel }}</subtitle>
+        {% endif %}
+    {% endif %}
 
-            {{#if unwatched}}
-                {{#if rating.classification}}
-                    <rating system="NZ-TV">{{formatRating rating.classification rating.advisoryWarnings}}</rating>
-                {{/if}}
-            {{else}}
-                {{#if smartWatch.video.rating.classification}}
-                    <rating system="NZ-TV">{{formatRating smartWatch.video.rating.classification smartWatch.video.rating.advisoryWarnings}}</rating>
-                {{/if}}
-            {{/if}}
+    {% data.show.unwatched %}
+    {% if data.show.rating.classification %}
+        <rating system="NZ-TV">{{ data.show.rating.classification | formatRating(data.show.rating.advisoryWarnings) }}</rating>
+    {% endif %}
+    {% else %}
+        {% if data.show.smartWatch.video.rating.classification %}
+            <rating system="NZ-TV">{{ data.show.smartWatch.video.rating.classification | formatRating(data.video.smartWatch.video.rating.advisoryWarnings) }}</rating>
+        {% endif %}
+    {% endif %}
 
-            <table>
-                <columnDefinitions>
-                    <columnDefinition width="100">
+    <table>
+        <columnDefinitions>
+            <columnDefinition width="100">
 
-                    </columnDefinition>
-                </columnDefinitions>
-                <rows>
-                    {{#if unwatched}}
-                        <row>
-                            <label>{{#each genres}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</label>
-                        </row>
+            </columnDefinition>
+        </columnDefinitions>
+        <rows>
+            {% if data.show.unwatched %}
+                <row>
+                    <label>
+                        {% set comma = joiner() %}
+                        {% for genre in genres -%}
+                            {{ comma() }} {{ genre }}
+                        {%- endfor %}
+                    </label>
+                </row>
 
-                        {{#ifCond smartWatch.video.type '==' 'Episode'}}
-                            <row>
-                                <label>{{../seasons}} season{{#ifCond ../seasons '!=' '1'}}s{{/ifCond}}</label>
-                            </row>
-                        {{/ifCond}}
-                        {{#ifCond smartWatch.video.type '!=' 'Episode'}}
-                            <row>
-                                <label>{{formatDuration ../smartWatch.video.duration.total}}</label>
-                            </row>
-                        {{/ifCond}}
-                    {{/if}}
-                    {{#if availability}}
-                        <row>
-                            <label>{{availability}}</label>
-                        </row>
-                    {{/if}}
+                {% if data.show.smartWatch.video.type == 'Episode' %}
+                    <row>
+                        <label>{{ data.show.seasons }} season{% if data.show.seasons != 1 %}s{% endif %}</label>
+                    </row>
+                {% else %}
+                    <row>
+                        <label>{{ data.show.smartWatch.video.duration.total | formatDuration }}</label>
+                    </row>
+                {% endif %}
+            {% endif %}
+            {% if data.show.availability %}
+                <row>
+                    <label>{{ data.show.availability }}</label>
+                </row>
+            {% endif %}
 
-                    {{#unless unwatched}}
-                        {{#if smartWatch.video.duration.complete}}
-                            <row>
-                                <label>Watched</label>
-                            </row>
-                        {{else if smartWatch.video.duration.watched}}
-                            <row>
-                                <label>{{subtractDurations smartWatch.video.duration.total smartWatch.video.duration.watched}} left</label>
-                            </row>
-                            <row>
-                                <progressBar percentage="{{subtractDurationsPercentage smartWatch.video.duration.watched smartWatch.video.duration.total}}"/>
-                            </row>
-                        {{/if}}
-                        {{#if smartWatch.video.captions}}
-                            <row>
-                                <mediaBadges>
-                                    <closedCaption/>
-                                </mediaBadges>
-                            </row>
-                        {{/if}}
-                    {{/unless}}
-                </rows>
-            </table>
+            {% if not data.show.unwatched %}
+                {% if data.show.smartWatch.video.duration.complete %}
+                    <row>
+                        <label>Watched</label>
+                    </row>
+                {% elseif data.show.smartWatch.video.duration.watched %}
+                    <row>
+                        <label>{{ data.show.smartWatch.video.duration.total | subtractDurations(data.show.smartWatch.video.duration.watched) }}
+                            left</label>
+                    </row>
+                    <row>
+                        <progressBar
+                                percentage="{{ data.video.smartWatch.video.duration.watched | subtractDurationsPercentage(data.video.smartWatch.video.duration.total) }}"/>
+                    </row>
+                {% endif %}
+                {% if smartWatch.video.captions %}
+                    <row>
+                        <mediaBadges>
+                            <closedCaption/>
+                        </mediaBadges>
+                    </row>
+                {% endif %}
+            {% endif %}
+        </rows>
+    </table>
 
-            <centerShelf>
-                <shelf id="test3">
-                    <sections>
-                        <shelfSection>
-                            <items>
-                                <actionButton id="play" onSelect="genericPage.play('{{smartWatch.video.id}}')" onPlay="genericPage.play('{{smartWatch.video.id}}')">
-                                    <title>{{smartWatch.label}}</title>
-                                    <image>resource://Play.png</image>
-                                    <focusedImage>resource://PlayFocused.png</focusedImage>
-                                </actionButton>
+    <centerShelf>
+        <shelf id="test3">
+            <sections>
+                <shelfSection>
+                    <items>
+                        <actionButton id="play" onSelect="genericPage.play('{{ data.show.smartWatch.video.id }}')"
+                                      onPlay="genericPage.play('{{ data.show.smartWatch.video.id }}')">
+                            <title>{{ data.show.smartWatch.label }}</title>
+                            <image>resource://Play.png</image>
+                            <focusedImage>resource://PlayFocused.png</focusedImage>
+                        </actionButton>
 
-                                {{#ifCond smartWatch.video.type '==' 'Episode'}}
-                                    <actionButton id="episodes" onSelect="genericPage.episodes('{{../id}}')">
-                                        <title>Episodes{{#ifCond ../extras '!=' '0'}} &amp; Extras{{/ifCond}}</title>
-                                        <image>resource://WaysToWatch.png</image>
-                                        <focusedImage>resource://WaysToWatchFocused.png</focusedImage>
-                                    </actionButton>
-                                {{/ifCond}}
+                        {% if data.show.smartWatch.video.type == 'Episode' %}
+                            <actionButton id="episodes" onSelect="genericPage.episodes('{{ data.show.id }}')">
+                                <title>Episodes{% if data.show.extras != '0' %} &amp; Extras{% endif %}</title>
+                                <image>resource://WaysToWatch.png</image>
+                                <focusedImage>resource://WaysToWatchFocused.png</focusedImage>
+                            </actionButton>
+                        {% endif %}
 
-                                <actionButton id="favourite" onSelect="genericPage.favourite('{{id}}, {{favourited}}')">
-                                    <title>{{#if favourited}}Favourited{{else}}Favourite{{/if}}</title>
-                                    <image>resource://Rate.png</image>
-                                    <focusedImage>resource://RateFocused.png</focusedImage>
-                                </actionButton>
-                            </items>
-                        </shelfSection>
-                    </sections>
-                </shelf>
-            </centerShelf>
-        {{/with}}
-        <bottomShelf>
-            <shelf id="relatedShows" columnCount="5">
-                <sections>
-                    <shelfSection>
-                        <items>
-                            {{#each relatedShows}}
-                                <sixteenByNinePoster id="{{id}}" onSelect="genericPage.load('{{id}}')">
-                                    <title>{{title}}</title>
-                                    <image required="true" src="{{tileImage}}?width=375&amp;height=210"/>
-                                    <defaultImage>resource://16x9.png</defaultImage>
-                                    {{#if badge}}
-                                        {{>snipe badge}}
-                                    {{/if}}
-                                </sixteenByNinePoster>
-                            {{/each}}
-                        </items>
-                    </shelfSection>
-                </sections>
-            </shelf>
-        </bottomShelf>
+                        <actionButton id="favourite"
+                                      onSelect="genericPage.favourite('{{ data.show.id }}, {{ data.show.favourited }}')">
+                            <title>{{ "Favourited" if data.show.favourited else "Favourite" }}</title>
+                            <image>resource://Rate.png</image>
+                            <focusedImage>resource://RateFocused.png</focusedImage>
+                        </actionButton>
+                    </items>
+                </shelfSection>
+            </sections>
+        </shelf>
+    </centerShelf>
+    <bottomShelf>
+        <shelf id="relatedShows" columnCount="5">
+            <sections>
+                <shelfSection>
+                    <items>
+                        {% for relatedShow in relatedShows %}
+                            <sixteenByNinePoster id="{{ relatedShow.id }}"
+                                                 onSelect="genericPage.load('{{ relatedShow.id }}')">
+                                <title>{{ relatedShow.title }}</title>
+                                <image required="true" src="{{ relatedShow.tileImage }}?width=375&amp;height=210"/>
+                                <defaultImage>resource://16x9.png</defaultImage>
+                                {% if badge %}
+                                    {% component 'snipe', badge %}
+                                {% endif %}
+                            </sixteenByNinePoster>
+                        {% endfor %}
+                    </items>
+                </shelfSection>
+            </sections>
+        </shelf>
+    </bottomShelf>
 
-        <divider>
-            <smallCollectionDivider alignment="left">
-                <title>Similar Shows</title>
-            </smallCollectionDivider>
-        </divider>
-    </itemDetailWithImageHeader>
-{{/with}}
+    <divider>
+        <smallCollectionDivider alignment="left">
+            <title>Similar Shows</title>
+        </smallCollectionDivider>
+    </divider>
+</itemDetailWithImageHeader>

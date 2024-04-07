@@ -1,8 +1,8 @@
 import {GenericPage} from "./generic-page.loader";
 import {PlayShow} from "../play-show/play-show.loader";
 import {EpisodesPage} from "../episodes-page/episodes-page.loader";
-import {HttpService} from "../../../../../Users/Shea/Documents/Apple TV Framework/library/dist/http-service";
 import {AuthInterceptor} from "../../auth-interceptor";
+import {HttpService} from "atv-legacy.js/dist/http-service";
 
 export function load(url: string) {
     new GenericPage(url).loadPage();

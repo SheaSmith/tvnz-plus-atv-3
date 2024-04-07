@@ -5,20 +5,20 @@
         <script src="https://tvnz-appletv.shea.nz/js/main-menu.js?t=160"/>
     </head>
     <body>
-        <viewWithNavigationBar id="menu" onNavigate="mainMenu.navigate(event)">
-            <navigation currentIndex="1">
-                <navigationItem id="search">
-                    <title>Search</title>
+    <viewWithNavigationBar id="menu" onNavigate="mainMenu.navigate(event)">
+        <navigation currentIndex="1">
+            <navigationItem id="search">
+                <title>Search</title>
+            </navigationItem>
+            {% for item in items %}
+                <navigationItem id="{{ item.href }}">
+                    <title>{{ item.title }}</title>
                 </navigationItem>
-                {{#each items}}
-                    <navigationItem id="{{this.href}}">
-                        <title>{{this.title}}</title>
-                    </navigationItem>
-                {{/each}}
-                <navigationItem id="profiles">
-                    <title>Switch Profile</title>
-                </navigationItem>
-            </navigation>
-        </viewWithNavigationBar>
+            {% endfor %}
+            <navigationItem id="profiles">
+                <title>Switch Profile</title>
+            </navigationItem>
+        </navigation>
+    </viewWithNavigationBar>
     </body>
 </atv>

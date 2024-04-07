@@ -5,37 +5,37 @@
         <script src="https://tvnz-appletv.shea.nz/js/generic-page.js?t=79"/>
     </head>
     <body>
-        <listWithPreview id="categories">
-            <header>
-                <simpleHeader>
-                    <title>Categories</title>
-                </simpleHeader>
-            </header>
-            <menu>
-                <sections>
-                    <menuSection>
-                        <items>
-                            {{#each layout.slots.main.modules}}
-                                <oneLineMenuItem id="{{id}}" onSelect="genericPage.load('{{moreLink.href}}')">
-                                    <label>{{title}}</label>
-                                    <accessories>
-                                        <arrow/>
-                                    </accessories>
-                                    <preview>
-                                        <paradePreview>
-                                            {{#each items}}
-                                                {{#with (lookup ../../_embedded href)}}
-                                                    <image>{{tileImage.src}}?width=375&amp;height=210</image>
-                                                {{/with}}
-                                            {{/each}}
-                                        </paradePreview>
-                                    </preview>
-                                </oneLineMenuItem>
-                            {{/each}}
-                        </items>
-                    </menuSection>
-                </sections>
-            </menu>
-        </listWithPreview>
+    <listWithPreview id="categories">
+        <header>
+            <simpleHeader>
+                <title>Categories</title>
+            </simpleHeader>
+        </header>
+        <menu>
+            <sections>
+                <menuSection>
+                    <items>
+                        {% for module in layout.slots.main.modules %}
+                            <oneLineMenuItem id="{{ module.id }}"
+                                             onSelect="genericPage.load('{{ module.moreLink.href }}')">
+                                <label>{{ module.title }}</label>
+                                <accessories>
+                                    <arrow/>
+                                </accessories>
+                                <preview>
+                                    <paradePreview>
+                                        {% for item in module.items %}
+                                            <image>{{ _embedded[module.href].tileImage.src }}?width=375&amp;height=210
+                                            </image>
+                                        {% endfor %}
+                                    </paradePreview>
+                                </preview>
+                            </oneLineMenuItem>
+                        {% endfor %}
+                    </items>
+                </menuSection>
+            </sections>
+        </menu>
+    </listWithPreview>
     </body>
 </atv>

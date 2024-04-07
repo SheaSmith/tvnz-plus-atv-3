@@ -1,4 +1,44 @@
-var path = require('path');
+// plugin
+const plugin = function () {
+    const header = 'global.setTimeout = function (callback, time, ...args) {\n' +
+        '    if (time == 0) {\n' +
+        '        callback(args);\n' +
+        '        return \'\';\n' +
+        '    }\n' +
+        '    else\n' +
+        '        return atv.setTimeout(callback, time, args);\n' +
+        '};\n' +
+        'global.clearTimeout = function (handle) {\n' +
+        '    if (handle != \'\')\n' +
+        '        atv.clearTimeout(handle);\n' +
+        '};\n' +
+        'global.clearInterval = function (handle) {\n' +
+        '    if (handle != \'\')\n' +
+        '        atv.clearInterval(handle);\n' +
+        '};\n' +
+        'global.setInterval = function (callback, time, ...args) {\n' +
+        '    if (time == 0) {\n' +
+        '        callback(args);\n' +
+        '        return \'\';\n' +
+        '    }\n' +
+        '    else\n' +
+        '        return atv.setInterval(callback, time, args);\n' +
+        '};';
+
+    return {
+        visitor: {
+            Program(node) {
+                node.unshiftContainer(
+                    'body',
+                    template(header)()
+                );
+            },
+        }
+    };
+};
+
+global.path = require('path');
+const {template} = require("@babel/core");
 
 module.exports = {
     entry: {
@@ -59,7 +99,8 @@ module.exports = {
                                 ]
                             ],
                             plugins: [
-                                "@babel/plugin-transform-runtime"
+                                "@babel/plugin-transform-runtime",
+                                plugin
                             ]
                         }
                     },

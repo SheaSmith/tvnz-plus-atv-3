@@ -12,10 +12,10 @@ import {CategoryLayoutComponent} from "../../components/category-layout-componen
 import {CategoryLayoutItemComponent} from "../../components/category-layout-item/category-layout-item.loader";
 import {ShowHomeComponent} from "../../components/show-home-component/show-home-component.loader";
 import {registerHelpers} from "../../custom-handlebars-helpers";
-import Handlebars from "handlebars";
 import {
     BandedSlotLayoutComponent
 } from "../../components/banded-slot-layout-component/banded-slot-layout-component.loader";
+import {Environment} from "nunjucks";
 
 export class GenericPage extends Page {
     protected loadTemplateSource(): Q.Promise<string> {
@@ -26,8 +26,8 @@ export class GenericPage extends Page {
     }
 
 
-    protected renderXml(data?: any) {
-        super.renderXml(data);
+    protected renderXml(environment: Environment, data?: any) {
+        super.renderXml(environment, data);
     }
 
     constructor(private url: string) {
@@ -54,7 +54,7 @@ export class GenericPage extends Page {
 
     }
 
-    protected registerCustomHelpers(handlebars: typeof Handlebars) {
-        registerHelpers(handlebars);
+    protected registerCustomHelpers(environment: Environment) {
+        registerHelpers(environment);
     }
 }

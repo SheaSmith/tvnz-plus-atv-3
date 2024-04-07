@@ -5,79 +5,78 @@
         <script src="https://tvnz-appletv.shea.nz/js/episodes-page.js?t=19"/>
     </head>
     <body>
-        {{#with data.show}}
-            <listWithPreview id="episodes" volatile="true" onVolatileReload="episodesPage.volatileReload('{{id}}')">
-                    <header>
-                        <simpleHeader>
-                            <title>{{title}}</title>
-                        </simpleHeader>
-                    </header>
-                    <menu>
-                        <sections>
-                            {{#each videoCollections}}
-                                <menuSection>
-                                    <header>
-                                        <horizontalDivider>
-                                            <title>{{label}}</title>
-                                        </horizontalDivider>
-                                    </header>
-                                    <items>
-                                        {{#each videos}}
-                                            <twoLineMenuItem id="{{id}}" onSelect="episodesPage.play('{{id}}')"
-                                                             onPlay="episodesPage.play('{{id}}')">
-                                                <label>{{primaryLabel}}</label>
-                                                <label2>{{secondaryLabel}}</label2>
-                                                <accessories>
-                                                    {{#if duration.complete}}
-                                                        <checkMark/>
-                                                    {{else if duration.watched}}
-                                                        <partiallyPlayedDot/>
-                                                    {{else}}
-                                                        <unplayedDot/>
-                                                    {{/if}}
-                                                    <arrow/>
-                                                </accessories>
-                                                <preview>
-                                                    <longDescriptionPreview>
-                                                        <title>{{primaryLabel}}</title>
-                                                        <summary>{{synopsis}}</summary>
-                                                        <image>{{image}}</image>
-                                                        {{#if secondaryLabel}}
-                                                            <footnote>{{secondaryLabel}}</footnote>
-                                                        {{/if}}
-                                                        {{#if rating}}
-                                                            <rating system="NZ-TV">{{formatRating rating.classification rating.advisoryWarnings}}</rating>
-                                                        {{/if}}
-                                                        <metadata>
-                                                            {{#if secondaryLabel}}
-                                                                <mainLabel>{{secondaryLabel}}</mainLabel>
-                                                            {{/if}}
-                                                            <label/>
-                                                            {{#if badge}}
-                                                                <label>{{badge}}</label>
-                                                            {{/if}}
-                                                            {{#if duration.complete}}
-                                                                <label>Watched</label>
-                                                            {{else if duration.watched}}
-                                                                <label>{{subtractDurations duration.total duration.watched}} left
-                                                                </label>
-                                                            {{/if}}
-                                                            {{#if captions}}
-                                                                <mediaBadges>
-                                                                    <closedCaption/>
-                                                                </mediaBadges>
-                                                            {{/if}}
-                                                        </metadata>
-                                                    </longDescriptionPreview>
-                                                </preview>
-                                            </twoLineMenuItem>
-                                        {{/each}}
-                                    </items>
-                                </menuSection>
-                            {{/each}}
-                        </sections>
-                    </menu>
-            </listWithPreview>
-        {{/with}}
+    <listWithPreview id="episodes" volatile="true" onVolatileReload="episodesPage.volatileReload('{{ data.show.id }}')">
+        <header>
+            <simpleHeader>
+                <title>{{ data.show.title }}</title>
+            </simpleHeader>
+        </header>
+        <menu>
+            <sections>
+                {% for videoCollection in  data.show.videoCollections %}
+                    <menuSection>
+                        <header>
+                            <horizontalDivider>
+                                <title>{{ videoCollection.label }}</title>
+                            </horizontalDivider>
+                        </header>
+                        <items>
+                            {% for video in videoCollection.videos %}
+                                <twoLineMenuItem id="{{ video.id }}" onSelect="episodesPage.play('{{ video.id }}')"
+                                                 onPlay="episodesPage.play('{{ video.id }}')">
+                                    <label>{{ video.primaryLabel }}</label>
+                                    <label2>{{ video.secondaryLabel }}</label2>
+                                    <accessories>
+                                        {% if video.duration.complete %}
+                                            <checkMark/>
+                                        {% elseif video.duration.watched %}
+                                            <partiallyPlayedDot/>
+                                        {% else %}
+                                            <unplayedDot/>
+                                        {% endif %}
+                                        <arrow/>
+                                    </accessories>
+                                    <preview>
+                                        <longDescriptionPreview>
+                                            <title>{{ video.primaryLabel }}</title>
+                                            <summary>{{ video.synopsis }}</summary>
+                                            <image>{{ video.image }}</image>
+                                            {% if video.secondaryLabel %}
+                                                <footnote>{{ video.secondaryLabel }}</footnote>
+                                            {% endif %}
+                                            {% if video.rating %}}
+                                                <rating system="NZ-TV">{{ video.rating.classification | formatRating(video.rating.advisoryWarnings) }}</rating>
+                                            {% endif %}
+                                            <metadata>
+                                                {% if video.secondaryLabel %}
+                                                    <mainLabel>{{ video.secondaryLabel }}</mainLabel>
+                                                {% endif %}
+                                                <label/>
+                                                {% if video.badge %}
+                                                    <label>{{ video.badge }}</label>
+                                                {% endif %}
+                                                {% if video.duration.complete %}
+                                                    <label>Watched</label>
+                                                {% elseif video.duration.watched %}
+                                                    <label>{{ video.duration.total | subtractDurations(video.duration.watched) }}
+                                                        left
+                                                    </label>
+                                                {% endif %}
+                                                {% if video.captions %}
+                                                    <mediaBadges>
+                                                        <closedCaption/>
+                                                    </mediaBadges>
+                                                {% endif %}
+                                            </metadata>
+                                        </longDescriptionPreview>
+                                    </preview>
+                                </twoLineMenuItem>
+                            {% endfor %}
+                        </items>
+                    </menuSection>
+                {% endfor %}
+            </sections>
+        </menu>
+    </listWithPreview>
     </body>
 </atv>

@@ -4,10 +4,11 @@ import {HttpService} from "atv-legacy.js/dist/http-service";
 import {ProfilePage} from "./pages/profile-page/profile-page.loader";
 import {MainMenu} from "./pages/main-menu/main-menu.loader";
 import {AuthInterceptor} from "./auth-interceptor";
-import Handlebars, {HelperOptions} from "handlebars";
 import {registerHelpers} from "./custom-handlebars-helpers";
 import PlayShowTemplate from '!!raw-loader!./pages/play-show/play-show.xml';
-import asset = atv.player.asset;
+import {TemplateLoader} from "atv-legacy.js/dist/template-loader";
+import {Environment} from "nunjucks";
+import { ComponentExtension } from "atv-legacy.js/dist/component-nunjucks";
 
 atv.config.doesJavaScriptLoadRoot = true
 
@@ -156,53 +157,13 @@ atv.player.loadRelatedPlayback = (upNextAsset, callback) => {
                     return;
                 }
 
-                Handlebars.registerHelper('json', (context) => {
-                    return JSON.stringify(context);
-                });
-                Handlebars.registerHelper('ifCond', (arg1, arg2, arg3, options: HelperOptions) => {
-                    switch (arg2) {
-                        case '==':
-                            // @ts-ignore
-                            return (arg1 == arg3) ? options.fn(this) : options.inverse(this);
-                        case '===':
-                            // @ts-ignore
-                            return (arg1 === arg3) ? options.fn(this) : options.inverse(this);
-                        case '!=':
-                            // @ts-ignore
-                            return (arg1 != arg3) ? options.fn(this) : options.inverse(this);
-                        case '!==':
-                            // @ts-ignore
-                            return (arg1 !== arg3) ? options.fn(this) : options.inverse(this);
-                        case '<':
-                            // @ts-ignore
-                            return (arg1 < arg3) ? options.fn(this) : options.inverse(this);
-                        case '<=':
-                            // @ts-ignore
-                            return (arg1 <= arg3) ? options.fn(this) : options.inverse(this);
-                        case '>':
-                            // @ts-ignore
-                            return (arg1 > arg3) ? options.fn(this) : options.inverse(this);
-                        case '>=':
-                            // @ts-ignore
-                            return (arg1 >= arg3) ? options.fn(this) : options.inverse(this);
-                        case '&&':
-                            // @ts-ignore
-                            return (arg1 && arg3) ? options.fn(this) : options.inverse(this);
-                        case '||':
-                            // @ts-ignore
-                            return (arg1 || arg3) ? options.fn(this) : options.inverse(this);
-                        default:
-                            // @ts-ignore
-                            return options.inverse(this);
-                    }
-                });
+                const loader = new TemplateLoader();
+                const env = new Environment(loader);
+                env.addExtension('component', new ComponentExtension(env));
 
-                registerHelpers(Handlebars);
+                registerHelpers(env);
 
-                // Compile the template.
-                const templateCompiled = Handlebars.compile(PlayShowTemplate);
-
-                const xmlString = templateCompiled(data);
+                const xmlString = env.renderString(PlayShowTemplate, data);
 
                 const upNextElement = atv.parseXML(xmlString).getElementById("asset");
 

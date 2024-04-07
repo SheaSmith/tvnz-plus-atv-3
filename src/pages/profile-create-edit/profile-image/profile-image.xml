@@ -2,26 +2,27 @@
 <atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:noNamespaceSchemaLocation="../../../../node_modules/atv-legacy.js/atv.xsd">
     <head>
-        <script src="https://tvnz-appletv.shea.nz/js/profile-image.js?t=12" />
+        <script src="https://tvnz-appletv.shea.nz/js/profile-image.js?t=12"/>
     </head>
     <body>
-        <scroller id="profileImage">
-            <header>
-                <simpleHeader>
-                    <title>Choose a profile picture</title>
-                </simpleHeader>
-            </header>
-            <items>
-                <grid id="imageGrid" columnCount="7">
-                    <items>
-                        {{#each icons}}
-                            <icloud-user-poster id="{{iconId}}" onSelect="profileImage.select('{{iconId}}', {{json ../profile}})">
-                                <image>{{iconImage.src}}</image>
-                            </icloud-user-poster>
-                        {{/each}}
-                    </items>
-                </grid>
-            </items>
-        </scroller>
+    <scroller id="profileImage">
+        <header>
+            <simpleHeader>
+                <title>Choose a profile picture</title>
+            </simpleHeader>
+        </header>
+        <items>
+            <grid id="imageGrid" columnCount="7">
+                <items>
+                    {% for icon in icons %}
+                        <icloud-user-poster id="{{ icon.iconId }}"
+                                            onSelect="profileImage.select('{{ icon.iconId }}', {{ profile | dump }})">
+                            <image>{{ icon.iconImage.src }}</image>
+                        </icloud-user-poster>
+                    {% endfor %}
+                </items>
+            </grid>
+        </items>
+    </scroller>
     </body>
 </atv>

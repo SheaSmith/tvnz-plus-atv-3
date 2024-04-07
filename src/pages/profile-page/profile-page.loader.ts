@@ -4,7 +4,7 @@ import Q from "atv-legacy-q";
 import {HttpService} from "atv-legacy.js/dist/http-service";
 import {AuthInterceptor} from "../../auth-interceptor";
 import {registerHelpers} from "../../custom-handlebars-helpers";
-import Handlebars from "handlebars";
+import {Environment} from "nunjucks";
 
 export class ProfilePage extends Page {
     protected loadTemplateSource(): Q.Promise<string> {
@@ -30,7 +30,7 @@ export class ProfilePage extends Page {
             .run<any>();
     }
 
-    protected registerCustomHelpers(handlebars: typeof Handlebars) {
-        registerHelpers(handlebars);
+    protected registerCustomHelpers(environment: Environment) {
+        registerHelpers(environment);
     }
 }

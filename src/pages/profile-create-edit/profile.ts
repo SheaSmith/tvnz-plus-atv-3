@@ -1,6 +1,6 @@
-import {HttpService} from "../../../../../Users/Shea/Documents/Apple TV Framework/library/dist/http-service";
 import {AuthInterceptor} from "../../auth-interceptor";
 import Q from 'atv-legacy-q';
+import {HttpService} from "atv-legacy.js/dist/http-service";
 
 export class Profile {
     id: string | undefined;

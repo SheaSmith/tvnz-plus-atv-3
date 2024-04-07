@@ -2,32 +2,35 @@
 <atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:noNamespaceSchemaLocation="../../../../node_modules/atv-legacy.js/atv.xsd">
     <head>
-        <script src="https://tvnz-appletv.shea.nz/js/profile-gender.js?t=13" />
+        <script src="https://tvnz-appletv.shea.nz/js/profile-gender.js?t=13"/>
     </head>
     <body>
-        <optionDialog id="gender">
-            <header>
-                <simpleHeader>
-                    <title>Gender</title>
-                </simpleHeader>
-            </header>
-            <menu>
-                <sections>
-                    <menuSection>
-                        <items>
-                            <oneLineMenuItem id="male" onSelect="profileGender.select('male', {{returnToEdit}}, {{json profile}})">
-                                <label>Male</label>
-                            </oneLineMenuItem>
-                            <oneLineMenuItem id="Female" onSelect="profileGender.select('female', {{returnToEdit}}, {{json profile}})">
-                                <label>Female</label>
-                            </oneLineMenuItem>
-                            <oneLineMenuItem id="diverse" onSelect="profileGender.select('diverse', {{returnToEdit}}, {{json profile}})">
-                                <label>Gender Diverse</label>
-                            </oneLineMenuItem>
-                        </items>
-                    </menuSection>
-                </sections>
-            </menu>
-        </optionDialog>
+    <optionDialog id="gender">
+        <header>
+            <simpleHeader>
+                <title>Gender</title>
+            </simpleHeader>
+        </header>
+        <menu>
+            <sections>
+                <menuSection>
+                    <items>
+                        <oneLineMenuItem id="male"
+                                         onSelect="profileGender.select('male', {{ returnToEdit }}, {{ profile | dump }})">
+                            <label>Male</label>
+                        </oneLineMenuItem>
+                        <oneLineMenuItem id="Female"
+                                         onSelect="profileGender.select('female', {{ returnToEdit }}, {{ profile | dump }})">
+                            <label>Female</label>
+                        </oneLineMenuItem>
+                        <oneLineMenuItem id="diverse"
+                                         onSelect="profileGender.select('diverse', {{ returnToEdit }}, {{ profile | dump }})">
+                            <label>Gender Diverse</label>
+                        </oneLineMenuItem>
+                    </items>
+                </menuSection>
+            </sections>
+        </menu>
+    </optionDialog>
     </body>
 </atv>

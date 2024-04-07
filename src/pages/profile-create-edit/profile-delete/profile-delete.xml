@@ -16,10 +16,10 @@
                 <sections>
                     <menuSection>
                         <items>
-                            <oneLineMenuItem id="delete" onSelect="profileDelete.deleteProfile('{{this}}')">
+                            <oneLineMenuItem id="delete" onSelect="profileDelete.deleteProfile('{{id}}')">
                                 <label>Delete</label>
                             </oneLineMenuItem>
-                            <oneLineMenuItem id="cancel" onSelect="profileDelete.cancel('{{this}}')">
+                            <oneLineMenuItem id="cancel" onSelect="profileDelete.cancel('{{id}}')">
                                 <label>Cancel</label>
                             </oneLineMenuItem>
                         </items>

@@ -1,9 +1,8 @@
 import { Page } from "atv-legacy.js/dist/page";
 import ProfileEditTemplate from '!!raw-loader!./profile-edit.xml';
 import Q from "atv-legacy-q";
-import {Profile} from "../profile";
-import {HttpService} from "../../../../../../Users/Shea/Documents/Apple TV Framework/library/dist/http-service";
 import {AuthInterceptor} from "../../../auth-interceptor";
+import {HttpService} from "atv-legacy.js/dist/http-service";
 
 export class ProfileEdit extends Page {
     constructor(private profileId: string) {

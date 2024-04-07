@@ -2,8 +2,8 @@ import { Page } from "atv-legacy.js/dist/page";
 import ProfileImageTemplate from '!!raw-loader!./profile-image.xml';
 import Q from "atv-legacy-q";
 import {Profile} from "../profile";
-import {HttpService} from "../../../../../../Users/Shea/Documents/Apple TV Framework/library/dist/http-service";
 import {AuthInterceptor} from "../../../auth-interceptor";
+import {HttpService} from "atv-legacy.js/dist/http-service";
 
 export class ProfileImage extends Page {
     constructor(private profile: Profile) {

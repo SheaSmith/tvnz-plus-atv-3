@@ -2,7 +2,7 @@ import { Page } from "atv-legacy.js/dist/page";
 import LoginPageTemplate from '!!raw-loader!./login-page.xml';
 import Q from "atv-legacy-q";
 import {registerHelpers} from "../../custom-handlebars-helpers";
-import Handlebars from "handlebars";
+import {Environment} from "nunjucks";
 
 export class LoginPage extends Page {
     protected loadTemplateSource(): Q.Promise<string> {
@@ -22,7 +22,7 @@ export class LoginPage extends Page {
         return deferred.promise;
     }
 
-    protected registerCustomHelpers(handlebars: typeof Handlebars) {
-        registerHelpers(handlebars);
+    protected registerCustomHelpers(environment: Environment) {
+        registerHelpers(environment);
     }
 }

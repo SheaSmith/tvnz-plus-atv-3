@@ -5,11 +5,9 @@
         <script src="https://tvnz-appletv.shea.nz/js/profile-edit.js?t=18"/>
     </head>
     <body>
-    {{#each profiles}}
-        {{#with this as | profile |}}
-        {{#ifCond id '==' ../profileId}}
-            {{#with ../this}}
-            <listWithPreview id="edit" volatile="true" onVolatileReload="profileEdit.reload('{{../../../profileId}}')">
+    {% for profile in profiles %}
+        {% if profile.id == profileId %}
+            <listWithPreview id="edit" volatile="true" onVolatileReload="profileEdit.reload('{{ profileId }}')">
                 <header>
                     <simpleHeader>
                         <title>Edit your profile</title>
@@ -17,62 +15,65 @@
                 </header>
                 <preview>
                     <imagePreview>
-                        <image required="true">{{iconImage.src}}</image>
+                        <image required="true">{{ iconImage.src }}</image>
                     </imagePreview>
                 </preview>
                 <menu>
                     <sections>
                         <menuSection>
                             <items>
-                                <oneLineMenuItem id="profileName" onSelect="profileEdit.editName({{json this}})">
+                                <oneLineMenuItem id="profileName" onSelect="profileEdit.editName({{ profile | dump }})">
                                     <label>Profile name</label>
-                                    <rightLabel>{{firstName}}</rightLabel>
+                                    <rightLabel>{{ firstName }}</rightLabel>
                                     <accessories>
                                         <arrow/>
                                     </accessories>
                                 </oneLineMenuItem>
-                                <oneLineMenuItem id="yearOfBirth" onSelect="profileEdit.editYearOfBirth({{json this}})">
+                                <oneLineMenuItem id="yearOfBirth"
+                                                 onSelect="profileEdit.editYearOfBirth({{ profile | dump }})">
                                     <label>Year of birth</label>
-                                    <rightLabel>{{yearOfBirth}}</rightLabel>
+                                    <rightLabel>{{ yearOfBirth }}</rightLabel>
                                     <accessories>
                                         <arrow/>
                                     </accessories>
                                 </oneLineMenuItem>
-                                <oneLineMenuItem id="gender" onSelect="profileEdit.editGender({{json this}})">
+                                <oneLineMenuItem id="gender" onSelect="profileEdit.editGender({{ profile | dump }})">
                                     <label>Gender</label>
-                                    <rightLabel>{{#ifCond gender '==' 'male'}}Male{{/ifCond}}{{#ifCond gender '==' 'female'}}Female{{/ifCond}}{{#ifCond gender '==' 'diverse'}}Gender diverse{{/ifCond}}</rightLabel>
+                                    <rightLabel>
+                                        {% if profile.gender == 'male' %}Male{% elseif profile.gender == 'female' %}Female{% else %}Gender diverse{% endif %}
+                                    </rightLabel>
                                     <accessories>
                                         <arrow/>
                                     </accessories>
                                 </oneLineMenuItem>
-                                {{#ifCond contentRestriction '==' 'none'}}
-                                    <oneLineMenuItem id="restrictions" onSelect="profileEdit.editRestrictions({{json ../this}})">
+                                {% if profile.contentRestriction == 'none' %}
+                                    <oneLineMenuItem id="restrictions"
+                                                     onSelect="profileEdit.editRestrictions({{ profile | dump }})">
                                         <label>Make this a kids profile</label>
                                         <accessories>
                                             <arrow/>
                                         </accessories>
                                     </oneLineMenuItem>
-                                {{/ifCond}}
-                                {{#ifCond contentRestriction '!=' 'none'}}
-                                    <twoLineMenuItem id="restrictions" onSelect="profileEdit.editRestrictions({{json ../this}})">
+                                {% else %}
+                                    <twoLineMenuItem id="restrictions"
+                                                     onSelect="profileEdit.editRestrictions({{ profile | dump }})">
                                         <label>Allowed shows</label>
-                                        {{#ifCond ../contentRestriction '==' 'preschool'}}
+                                        {% if profile.contentRestriction == 'preschool' %}
                                             <rightLabel>Pre school shows (2-5)</rightLabel>
-                                        {{/ifCond}}
-                                        {{#ifCond ../contentRestriction '==' 'preteenG'}}
+                                        {% elseif profile.contentRestriction == 'preteenG' %}
                                             <rightLabel>Kids shows (5-12)</rightLabel>
                                             <label2>PG rated kids shows not allowed</label2>
-                                        {{/ifCond}}
-                                        {{#ifCond ../contentRestriction '==' 'preteenPG'}}
+
+                                        {% elseif profile.contentRestriction == 'preteenPG' %}
                                             <rightLabel>Kids shows (5-12)</rightLabel>
                                             <label2>PG rated kids shows allowed</label2>
-                                        {{/ifCond}}
+                                        {% endif %}
                                         <accessories>
                                             <arrow/>
                                         </accessories>
                                     </twoLineMenuItem>
-                                {{/ifCond}}
-                                <oneLineMenuItem id="picture" onSelect="profileEdit.editImage({{json this}})">
+                                {% endif %}
+                                <oneLineMenuItem id="picture" onSelect="profileEdit.editImage({{ profile | dump }})">
                                     <label>Change picture</label>
                                     <accessories>
                                         <arrow/>
@@ -87,7 +88,8 @@
                                 </horizontalDivider>
                             </header>
                             <items>
-                                <oneLineMenuItem id="delete" onSelect="profileEdit.deleteProfile('{{../../../profileId}}')">
+                                <oneLineMenuItem id="delete"
+                                                 onSelect="profileEdit.deleteProfile('{{ profileId }}')">
                                     <label>Delete profile</label>
                                     <accessories>
                                         <arrow/>
@@ -98,9 +100,7 @@
                     </sections>
                 </menu>
             </listWithPreview>
-            {{/with}}
-        {{/ifCond}}
-        {{/with}}
-    {{/each}}
+        {% endif %}
+    {% endfor %}
     </body>
 </atv>

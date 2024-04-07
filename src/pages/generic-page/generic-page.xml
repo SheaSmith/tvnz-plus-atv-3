@@ -7,8 +7,6 @@
         <script src="https://tvnz-appletv.shea.nz/js/generic-page.js?t=79"/>
     </head>
     <body>
-        {{#with layout}}
-            {{> (lookup . 'type') @root }}
-        {{/with}}
+        {% include layout.type %}
     </body>
 </atv>

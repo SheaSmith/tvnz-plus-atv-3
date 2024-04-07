@@ -3,6 +3,8 @@ import {GenericPage} from "../generic-page/generic-page.loader";
 import {CategoriesPage} from "../categories-page/categories-page.loader";
 import {SearchPage} from "../search/search.loader";
 
+
+
 export function navigate(event: ATVNavigateEvent) {
     if (event.navigationItemId == "search") {
         new SearchPage().loadPage(event);

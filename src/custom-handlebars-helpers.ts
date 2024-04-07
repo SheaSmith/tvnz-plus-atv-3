@@ -1,18 +1,19 @@
-import * as Handlebars from "handlebars";
+import {Environment} from "nunjucks";
 
 const iso8601DurationRegex = /(-)?P(?:([.,\d]+)Y)?(?:([.,\d]+)M)?(?:([.,\d]+)W)?(?:([.,\d]+)D)?T(?:([.,\d]+)H)?(?:([.,\d]+)M)?(?:([.,\d]+)S)?/;
 
-export function registerHelpers(handlebars: typeof Handlebars) {
-    handlebars.registerHelper("formatDuration", (duration) => {
-       const matches = duration.match(iso8601DurationRegex);
+export function registerHelpers(environment: Environment) {
+    environment.addFilter("formatDuration", (duration, test) => {
+        console.log('formatDuration', duration, test)
+        const matches = duration.match(iso8601DurationRegex);
 
-       const hours = matches[6];
-       const minutes = matches[7];
+        const hours = matches[6];
+        const minutes = matches[7];
 
-       return formatDuration(minutes, hours);
+        return formatDuration(minutes, hours);
     });
 
-    handlebars.registerHelper("subtractDurations", (duration1, duration2) => {
+    environment.addFilter("subtractDurations", (duration1, duration2) => {
         const difference = subtractDuration(duration1, duration2).difference;
 
         const hours = Math.floor(difference / 60);
@@ -21,13 +22,13 @@ export function registerHelpers(handlebars: typeof Handlebars) {
         return formatDuration(minutes, hours);
     });
 
-    handlebars.registerHelper("subtractDurationsPercentage", (duration1, duration2) => {
+    environment.addFilter("subtractDurationsPercentage", (duration1, duration2) => {
         const sub = subtractDuration(duration1, duration2);
 
         return sub.totalMinutes1 / sub.totalMinutes2 * 100;
     })
 
-    handlebars.registerHelper('durationToSeconds', (duration) => {
+    environment.addFilter("durationToSeconds", (duration) => {
         if (duration == null) {
             return 0;
         }
@@ -55,9 +56,9 @@ export function registerHelpers(handlebars: typeof Handlebars) {
 
             return totalSeconds;
         }
-    })
+    });
 
-    handlebars.registerHelper("formatRating", (classification, advisoryWarnings) => {
+    environment.addFilter("formatRating", (classification, advisoryWarnings) => {
        let ratingBase = classification.replace("_", "");
 
        if (advisoryWarnings != undefined) {

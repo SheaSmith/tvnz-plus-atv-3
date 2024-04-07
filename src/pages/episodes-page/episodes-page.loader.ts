@@ -1,10 +1,10 @@
 import { Page } from "atv-legacy.js/dist/page";
 import EpisodesPageTemplate from '!!raw-loader!./episodes-page.xml';
 import Q from "atv-legacy-q";
-import Handlebars from "handlebars";
 import {registerHelpers} from "../../custom-handlebars-helpers";
-import {HttpService} from "../../../../../Users/Shea/Documents/Apple TV Framework/library/dist/http-service";
 import {AuthInterceptor} from "../../auth-interceptor";
+import {Environment} from "nunjucks";
+import {HttpService} from "atv-legacy.js/dist/http-service";
 
 export class EpisodesPage extends Page {
     constructor(private showId: string) {
@@ -26,8 +26,8 @@ export class EpisodesPage extends Page {
         return deferred.promise;
     }
 
-    protected registerCustomHelpers(handlebars: typeof Handlebars) {
-        registerHelpers(handlebars);
+    protected registerCustomHelpers(environment: Environment) {
+        registerHelpers(environment);
     }
 
 }

@@ -1,7 +1,7 @@
-import {HttpService} from "../../../../../Users/Shea/Documents/Apple TV Framework/library/dist/http-service";
 import {AuthInterceptor} from "../../auth-interceptor";
 import {GenericPage} from "../generic-page/generic-page.loader";
 import {PlayShow} from "../play-show/play-show.loader";
+import {HttpService} from "atv-legacy.js/dist/http-service";
 
 const searchString = atv.sessionStorage.getItem("lastSearch");
 

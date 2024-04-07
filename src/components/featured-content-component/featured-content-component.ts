@@ -1,7 +1,6 @@
 import {getExpandedRow} from "../../expand-row-helper";
 import FeaturedContentComponentTemplate from '!!raw-loader!./featured-content-component.xml';
 import {SnipeComponent} from "../snipe-component/snipe-component.loader";
-import Handlebars from "handlebars";
 
 let loading = false;
 
@@ -18,7 +17,7 @@ export function expandRow(index: number, parentId: string, nextPage: string, mod
 
         snipeComponent.loadTemplate().then((c) => {
             try {
-                Handlebars.registerPartial(c.componentKey, c.template);
+                // Handlebars.registerPartial(c.componentKey, c.template);
 
                 getExpandedRow(nextPage, FeaturedContentComponentTemplate, (d) => {
                     const children = d.getElementById(parentId).childElements;

@@ -2,8 +2,9 @@ import { Page } from "atv-legacy.js/dist/page";
 import {registerHelpers} from "../../custom-handlebars-helpers";
 import PlayShowTemplate from '!!raw-loader!./play-show.xml';
 import Q from "atv-legacy-q";
-import {HttpService} from "../../../../../Users/Shea/Documents/Apple TV Framework/library/dist/http-service";
 import {AuthInterceptor} from "../../auth-interceptor";
+import {HttpService} from "atv-legacy.js/dist/http-service";
+import {Environment} from "nunjucks";
 
 export class PlayShow extends Page {
     constructor(private pageId: string) {
@@ -32,8 +33,8 @@ export class PlayShow extends Page {
     }
 
 
-    protected registerCustomHelpers(handlebars: typeof Handlebars) {
-        super.registerCustomHelpers(handlebars);
-        registerHelpers(handlebars);
+    protected registerCustomHelpers(environment: Environment) {
+        super.registerCustomHelpers(environment);
+        registerHelpers(environment);
     }
 }
