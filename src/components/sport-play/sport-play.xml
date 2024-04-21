@@ -1,0 +1,25 @@
+{#{% set emb = _embedded[id] %}#}
+{#<dialog id="{{ emb.playbackHref }}">#}
+{#    <title>{{ emb.title }}{{ ': ' + emb.phase if emb.phase else '' }}</title>#}
+{#    <description>Live stream will be starting on {{ emb.media.startTime }}</description>#}
+{#</dialog>#}
+
+<optionDialog id="delete">
+<header>
+    <simpleHeader>
+        <title>Test</title>
+    </simpleHeader>
+</header>
+<description>Warning: Deleting this profile will permanently delete their favourites, recommendations and watch history. You won't be able to get this back again.</description>
+<menu>
+    <sections>
+        <menuSection>
+            <items>
+                <oneLineMenuItem id="delete" onSelect="genericPage.playSport('{{_embedded[layout.video.href].playbackHref}}')">
+                    <label>Delete</label>
+                </oneLineMenuItem>
+            </items>
+        </menuSection>
+    </sections>
+</menu>
+</optionDialog>

@@ -42,6 +42,24 @@
                 {% if emb.badge %}
                     {% component 'snipe', emb.badge %}
                 {% endif %}
+
+                {% if not emb.badge and emb.videoType == 'LIVE' %}
+                    {% if (emb.media.startTime | parseDate) < currentDate %}
+                        <snipe position="downLeft" color="red-grad">
+                            <title>Live</title>
+                        </snipe>
+                    {% elseif (emb.media.startTime | parseDate) > currentDate %}
+                        <snipe position="downLeft" color="turquoise">
+                            <title>Upcoming</title>
+                        </snipe>
+                    {% else %}
+                        <snipe position="downLeft" color="grey80">
+                            <title>Unavailable</title>
+                        </snipe>
+                    {% endif %}
+
+
+                {% endif %}
                 {% if module.tileLayout == 'fullWidthCircular' %}
             </squarePoster>
             {% elseif module.tileLayout == 'fullWidthPortrait' %}

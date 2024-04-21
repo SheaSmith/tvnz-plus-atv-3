@@ -16,6 +16,7 @@ import {
     BandedSlotLayoutComponent
 } from "../../components/banded-slot-layout-component/banded-slot-layout-component.loader";
 import {Environment} from "nunjucks";
+import {SportPlay} from "../../components/sport-play/sport-play.loader";
 
 export class GenericPage extends Page {
     protected loadTemplateSource(): Q.Promise<string> {
@@ -31,7 +32,7 @@ export class GenericPage extends Page {
     }
 
     constructor(private url: string) {
-        super([new HomeComponent(), new HeroComponent(), new SnipeComponent(), new FeaturedContentComponent(), new ItemStripComponent(), new CategoryLayoutComponent(), new CategoryLayoutItemComponent(), new ShowHomeComponent(), new BandedSlotLayoutComponent()]);
+        super([new HomeComponent(), new HeroComponent(), new SnipeComponent(), new FeaturedContentComponent(), new ItemStripComponent(), new CategoryLayoutComponent(), new CategoryLayoutItemComponent(), new ShowHomeComponent(), new BandedSlotLayoutComponent(), new SportPlay()]);
     }
 
     protected loadData(): Q.Promise<any> {

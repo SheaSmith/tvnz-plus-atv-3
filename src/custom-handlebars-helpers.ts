@@ -68,6 +68,14 @@ export function registerHelpers(environment: Environment) {
        return ratingBase;
     });
 
+    environment.addFilter("parseDate", (date) => {
+        return Date.parse(date);
+    });
+
+    environment.addFilter("typeof", (data) => typeof data);
+
+    environment.addGlobal("currentDate", Date.now());
+
     console.log("registered helpers");
 }
 

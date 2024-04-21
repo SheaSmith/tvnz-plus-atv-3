@@ -13,18 +13,20 @@
     <menu>
         <sections>
             {% set module = layout.slots.hero.modules[1] %}
-            <menuSection>
-                <header>
-                    <horizontalDivider alignment="left">
-                        <title>{{ module.title }}</title>
-                    </horizontalDivider>
-                </header>
-                <items>
-                    {% for item in module.items %}
-                    {% component 'categoryLayoutItem', { item: item, embedded: _embedded } %}
-                    {% endfor %}
-                </items>
-            </menuSection>
+            {% if module.items %}
+                <menuSection>
+                    <header>
+                        <horizontalDivider alignment="left">
+                            <title>{{ module.title }}</title>
+                        </horizontalDivider>
+                    </header>
+                    <items>
+                        {% for item in module.items %}
+                            {% component 'categoryLayoutItem', { item: item, embedded: _embedded } %}
+                        {% endfor %}
+                    </items>
+                </menuSection>
+            {% endif %}
 
             {% for module in layout.slots.main.modules %}
                 <menuSection>

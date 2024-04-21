@@ -11,7 +11,7 @@
                 <sixteenByNinePoster id="{{ embeddedDetails.id }}"
                                      onSelect="genericPage.load('{% if embeddedDetails.showId %}{{ embeddedDetails.showId }}{% else %}{{ embeddedDetails.page.href }}{% endif %}')">
                     <title>{{ embeddedDetails.title }}</title>
-                    <image required="true" src="{{ embeddedDetails.tileImage.src }}?width=375&amp;height=210"/>
+                    <image required="true" src="{{ embeddedDetails.tileImage.src if embeddedDetails.tileImage else embeddedDetails.images[0].src }}?width=375&amp;height=210"/>
                     <defaultImage>resource://16x9.png</defaultImage>
                     <uberImage src720="{{ embeddedDetails.coverImage.src }}?width=1280&amp;height=400"
                                src1080="{{ embeddedDetails.coverImage.src }}?width=1920&amp;height=641"/>

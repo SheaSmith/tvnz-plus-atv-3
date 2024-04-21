@@ -25,7 +25,7 @@
                                 <preview>
                                     <paradePreview>
                                         {% for item in module.items %}
-                                            <image>{{ _embedded[module.href].tileImage.src }}?width=375&amp;height=210
+                                            <image>{{ _embedded[item.href].tileImage.src }}?width=1125&amp;height=630
                                             </image>
                                         {% endfor %}
                                     </paradePreview>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<atv xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../../../node_modules/atv-legacy.js/atv.xsd">
+    <body>
+    <videoPlayer id="videoPlayer">
+        <httpLiveStreamingVideoAsset id="asset">
+            <mediaURL>{{ streamData.streaming.hls.url }}</mediaURL>
+            <title>{{ emb.title }}{{ ': ' + emb.phase if emb.phase else '' }}</title>
+{#            <description>{{ emb.description }}</description>#}
+{#            <image src="{{ emb.images[0].src }}"/>#}
+{#            <bookmarkTime>{{ data.video.duration.watched | durationToSeconds }}</bookmarkTime>#}
+{#            {% for cuePoint in data.video.playback.bcPayload.cue_points %}#}
+{#                {% if cuePoint.name == 'CREDITS' %}#}
+{#                    <upNextPresentationTime>{{ cuePoint.time }}</upNextPresentationTime>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+            {#            <upNextPresentationDuration>20</upNextPresentationDuration>#}
+            <stash>
+{#                <fpsKeyServerURL>https://apis-public-prod.tvnz.io/license/v1/fp</fpsKeyServerURL>#}
+{#                <fpsCertificateURL>https://d2iiff4t1bxu6w.cloudfront.net/fairplay/fairplay.cer</fpsCertificateURL>#}
+                <fpsKeyServerURL>{{ streamData.encryption.licenseServers.fairplay }}</fpsKeyServerURL>
+                <fpsCertificateURL>{{ streamData.encryption.certificates.fairplay }}</fpsCertificateURL>
+                <token>{{ streamData.encryption.drmToken }}</token>
+                <sport>true</sport>
+            </stash>
+        </httpLiveStreamingVideoAsset>
+    </videoPlayer>
+    </body>
+</atv>

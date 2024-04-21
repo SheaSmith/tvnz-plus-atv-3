@@ -20,14 +20,8 @@
         {% endif %}
     {% endif %}
 
-    {% data.show.unwatched %}
-    {% if data.show.rating.classification %}
-        <rating system="NZ-TV">{{ data.show.rating.classification | formatRating(data.show.rating.advisoryWarnings) }}</rating>
-    {% endif %}
-    {% else %}
-        {% if data.show.smartWatch.video.rating.classification %}
-            <rating system="NZ-TV">{{ data.show.smartWatch.video.rating.classification | formatRating(data.video.smartWatch.video.rating.advisoryWarnings) }}</rating>
-        {% endif %}
+    {% if data.show.smartWatch.video.rating.classification %}
+        <rating system="NZ-TV">{{ data.show.smartWatch.video.rating.classification | formatRating(data.video.smartWatch.video.rating.advisoryWarnings) }}</rating>
     {% endif %}
 
     <table>
@@ -70,12 +64,11 @@
                     </row>
                 {% elseif data.show.smartWatch.video.duration.watched %}
                     <row>
-                        <label>{{ data.show.smartWatch.video.duration.total | subtractDurations(data.show.smartWatch.video.duration.watched) }}
-                            left</label>
+                        <label>{{ data.show.smartWatch.video.duration.total | subtractDurations(data.show.smartWatch.video.duration.watched) }} left</label>
                     </row>
                     <row>
                         <progressBar
-                                percentage="{{ data.video.smartWatch.video.duration.watched | subtractDurationsPercentage(data.video.smartWatch.video.duration.total) }}"/>
+                                percentage="{{ data.show.smartWatch.video.duration.watched | subtractDurationsPercentage(data.show.smartWatch.video.duration.total) }}"/>
                     </row>
                 {% endif %}
                 {% if smartWatch.video.captions %}
@@ -125,7 +118,7 @@
             <sections>
                 <shelfSection>
                     <items>
-                        {% for relatedShow in relatedShows %}
+                        {% for relatedShow in data.relatedShows %}
                             <sixteenByNinePoster id="{{ relatedShow.id }}"
                                                  onSelect="genericPage.load('{{ relatedShow.id }}')">
                                 <title>{{ relatedShow.title }}</title>

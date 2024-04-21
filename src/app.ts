@@ -12,6 +12,7 @@ import { ComponentExtension } from "atv-legacy.js/dist/component-nunjucks";
 
 atv.config.doesJavaScriptLoadRoot = true
 
+
 atv.onAppEntry = () => {
     //if (atv.localStorage['accessToken'] == null) {
         initialise(new LoginPage());
@@ -58,32 +59,78 @@ atv.onLogout = () => {
     atv.sessionStorage.clear();
 }
 
+var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+    // Regular expression to check formal correctness of base64 encoded strings
+    b64re = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
+
+var chars = {
+    ascii: function () {
+        return 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    },
+    indices: function () {
+           let cache = {} as any;
+            var ascii = chars.ascii();
+
+            for (var c = 0; c < ascii.length; c++) {
+                var chr = ascii[c];
+                cache[chr] = c;
+            }
+
+            return cache;
+
+    }
+};
+
+
+
+
+
 atv.secureKeyDelivery!.fetchKeys = (uri, requestData, callback) => {
     console.log("Fetching keys...");
+    console.log(requestData);
+    const sport = atv.player.asset!.getElementByName("stash").getElementByName("sport");
     const keyServerUrl = atv.player.asset!.getElementByName("stash").getElementByName("fpsKeyServerURL").textContent;
 
-    new HttpService(keyServerUrl, "POST")
-        .header("Content-Type", "application/json")
-        .body(`{"publisher_id": "1", "application_id": "1", "server_playback_context": "${requestData}"}`)
-        .run()
-        .then((res) => {
-            console.log("Fetched keys successfully");
-            callback.success(res.bodyAsBase64);
-        })
-        .catch((error) => {
-            callback.failure("An error occurred. Please try again later.");
-            console.error(error);
-        });
+    if (sport) {
+        new HttpService("https://worker-broad-boat-b2ce.shea9872.workers.dev/", "POST")
+            .header('authorization', atv.player.asset!.getElementByName("stash").getElementByName("token").textContent)
+            .body(requestData)
+            .run()
+            .then((res) => {
+                console.log("Fetched keys successfully");
+                callback.success(res.bodyAsBase64);
+            })
+            .catch((error) => {
+                callback.failure("An error occurred. Please try again later.");
+                console.error(error);
+            });
+    }
+    else {
+
+        new HttpService(keyServerUrl, "POST")
+            .header("Content-Type", "application/json")
+            .body(`{"publisher_id": "1", "application_id": "1", "server_playback_context": "${requestData}"}`)
+            .run()
+            .then((res) => {
+                console.log("Fetched keys successfully");
+                callback.success(res.bodyAsBase64);
+            })
+            .catch((error) => {
+                callback.failure("An error occurred. Please try again later.");
+                console.error(error);
+            });
+    }
 }
 
 atv.secureKeyDelivery!.fetchAssetID = (uri, callback) => {
-    console.log("Fetching asset ID...");
+    console.log("Fetching asset ID...", uri);
     callback.success(uri.replace("skd://assetId=", "").replace("&variantId=fairplay", ""), false);
 }
 
 atv.secureKeyDelivery!.fetchCertificate = (uri, callback) => {
-    console.log("Fetching certificate...");
+    console.log("Fetching certificate...", uri);
     const certificateUrl = atv.player.asset!.getElementByName("stash").getElementByName("fpsCertificateURL").textContent;
+    console.log(certificateUrl)
 
     new HttpService(certificateUrl, "GET")
         .run()
@@ -113,6 +160,7 @@ function recordDurationWatched(seconds: number) {
 }
 
 atv.onGenerateRequest = (req) => {
+    console.log("generateReq", req.url)
     if (req.url.indexOf("search-results-page.xml") != -1) {
         const searchTerm = req.url.substring(req.url.indexOf("?q=")).replace("?q=", "");
         atv.sessionStorage.setItem("lastSearch", searchTerm);

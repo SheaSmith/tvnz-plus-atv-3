@@ -3,6 +3,7 @@ import {PlayShow} from "../play-show/play-show.loader";
 import {EpisodesPage} from "../episodes-page/episodes-page.loader";
 import {AuthInterceptor} from "../../auth-interceptor";
 import {HttpService} from "atv-legacy.js/dist/http-service";
+import {SportsViewer} from "../sports-video/sports-viewer.loader";
 
 export function load(url: string) {
     new GenericPage(url).loadPage();
@@ -10,6 +11,18 @@ export function load(url: string) {
 
 export function play(showId: string) {
     new PlayShow(showId).loadPage();
+}
+
+export function playSport(playbackHref: string) {
+    new HttpService(playbackHref, 'GET')
+        .interceptor(new AuthInterceptor())
+        .header("Content-Type", "application/json")
+        .run()
+        .then((data) => {
+            if (data.statusCode == 200) {
+                new SportsViewer(data.body, { title: 'Test' }).loadPage();
+            }
+        })
 }
 
 export function episodes(showId: string) {
